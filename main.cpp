@@ -43,8 +43,8 @@ int main(int argc, char* argv[])
     }
 
     // Output setup     
-    int height = 480;
-    int width = 640;
+    int height = 1080;
+    int width = 1920;
 
     glm::vec3 backgroundColor(0.f,0.f,0.f); //(0.5f, 0.7f, 1.0f); 
     std::vector<RGBA> Image(width * height, RGBA(0, 0, 0, 255));
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
     // Clouds setup 
     float length1 = 50.f;                    // Lenght  is along the x axis
-    float breadth1 = 10.0f;                   // Breadth is along the y axis 
+    float breadth1 = 1.0f;                   // Breadth is along the y axis 
     float h1 = 50.f;    
     
     float length = 1.5f;                    // Lenght  is along the x axis
@@ -112,18 +112,18 @@ int main(int argc, char* argv[])
     // for (int frame = 0; frame < frames_to_render; ++frame) 
     // {
 
-        glm::vec3 cloudCenter(0.f, 3.f, -10.0f); 
+        glm::vec3 cloudCenter(0.f, 3.5f, -10.0f); 
         Cloud cloud1(cloudCenter, length1, breadth1, h1, densityOffset, shapeOffset , densityMultiplier, lightAbsorption);
         cloud1.shapeOffset.x = 2.f * frame_n; // Updating cloud positions
 
-        glm::vec3 cloudCenter2(0.f, 0.0f, -20.0f); 
-        Cloud cloud2(cloudCenter2, length, breadth, h, densityOffset * 8, shapeOffset , densityMultiplier * 2, lightAbsorption * 2);
-        cloud2.shapeOffset.x = 1.f * frame_n ; // Updating cloud positions
+        // glm::vec3 cloudCenter2(0.f, 0.0f, -20.0f); 
+        // Cloud cloud2(cloudCenter2, length, breadth, h, densityOffset * 8, shapeOffset , densityMultiplier * 2, lightAbsorption * 2);
+        // cloud2.shapeOffset.x = 1.f * frame_n ; // Updating cloud positions
         
         // lightPos = initialPosition + t * frame * movDir;
         // Light light1(lightPos, ligthColor, radius);
         
-        off = .1f * frame_n;
+        off = .01f * frame_n;
         std::vector<Light> l = lights(5, glm::vec3(0.f,0.f,-5.f), 2.f, off,rotationAxis);
         //Light lig(glm::vec3(0.f,0.f,-10.f),glm::vec3(1.0f,1.0f,1.0f),.5f);
         
@@ -148,12 +148,11 @@ int main(int argc, char* argv[])
                 for(auto x : l)
                     disp += x.lightSphereWithGlow(worldRayDir, camera.pos);
 
-                // float clampedY = glm::clamp(worldRayDir.y, 0.0f, 1.0f);
-                // float skyFactor = glm::clamp(std::exp(sat(clampedY) * -40.0f), 0.0f, 1.0f);
-                // glm::vec3 skyColor = glm::exp(-clampedY / glm::vec3(0.025f, 0.0165f, 0.1f));
-                // backgroundColor = glm::mix(skyColor, glm::vec3(0.025f, 0.0165f, 0.0f), skyFactor);  
+                float skyFactor = std::exp(sat(worldRayDir.y) * -40.0f);
+                glm::vec3 skyColor = glm::exp(-worldRayDir.y / glm::vec3(0.025f, 0.0165f, 0.1f));
+                backgroundColor = glm::mix(skyColor, glm::vec3(0.025f, 0.0165f, 0.0f), skyFactor);   
 
-                backgroundColor = glm::vec3(0.f,0.f,0.f);
+                //backgroundColor = glm::vec3(0.f,0.f,0.f);
 
                 // new addition
 
@@ -175,7 +174,7 @@ int main(int argc, char* argv[])
 
         // Save the frame
 
-        std::string filename = "mountainsMoving/cloud_frame_" + std::to_string(frame_n) + ".png";
+        std::string filename = "HD/cloud_frame_" + std::to_string(frame_n) + ".png";
         saveImage(Image, filename.c_str(), width, height);
         std::cout << "Saved frame: " << filename << std::endl;
     //}   
