@@ -270,7 +270,7 @@ inline std::vector<Light> lights(int n, glm::vec3 center, float r, float offset,
         );
         
         // Create a light with a fixed radius
-        float lightRadius = 0.05f;
+        float lightRadius = 2.f;
         Light light(lightPos, lightColor, lightRadius);
         
         // Add the light to the vector

@@ -61,7 +61,7 @@ private:
     // Scene SDF calculation
    static Material calculateSceneSDF(const glm::vec3& pos, float baseY) {
         float currNoiseSample = std::abs(noiseFBM(glm::vec2(pos.x, pos.z) / 2.0f, 1));
-        currNoiseSample *= 2.5f;
+        currNoiseSample *= 5.5f;
 
         currNoiseSample += 0.1f * noiseFBM(glm::vec2(pos.x, pos.z) * 4.0f, 10);
         
@@ -160,7 +160,7 @@ static glm::vec3 rayMarch(const glm::vec3& cameraOrigin, const glm::vec3& camera
                             const std::vector<Light>& lights,
                             glm::vec3 skyColor=glm::vec3(0.f,0.f,0.f),
                             float baseY = 0.0f,
-                            float brightnessMultiplier = 5.0f) 
+                            float brightnessMultiplier = 7.0f) 
                             {
         Material mat = rayCast(cameraOrigin, cameraDir, baseY, NUM_STEPS, 1.0f, MAX_DIST);
 
